@@ -1,0 +1,14 @@
+{
+  "project": "Garage Week 2024",
+  "host": "main--garageweek2024--absarasw.hlx.live",
+  "plugins": [
+    {
+      "id": "generate-variations",
+      "title": "Generate Variations",
+      "url": "https://experience.adobe.com/aem/generate-variations",
+      "passConfig": true,
+      "environments": ["preview","live", "edit"],
+      "includePaths": ["**.docx**"]
+    }
+  ]
+}
