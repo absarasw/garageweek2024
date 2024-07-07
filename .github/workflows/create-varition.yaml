@@ -1,0 +1,33 @@
+name: Generate Variations
+
+on:
+  repository_dispatch:
+    types:
+      - create-variation
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+      - run: |
+          echo "Status: ${{ github.event.client_payload.status }}"
+          echo "Path: ${{ github.event.client_payload.path }}"
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: npm install
+      - name: Download the markdown
+        run: curl https://main--petplace--absarasw.hlx.page/index.md -o index.md
+        shell: bash
+      - name: Convert markdown to docx
+        run: node node_modules/@adobe/helix-md2docx/src/cli/convert2docx.js index.md
+
